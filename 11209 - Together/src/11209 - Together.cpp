@@ -15,25 +15,30 @@ struct compare {
 	}
 };
 
-void dfs(const graph& G, int s, int f, set<int>& visited,
-		vector<vector<int>>& path) {
+bool dfs(const graph& G, int s, int f, set<int>& visited,
+		vector<pair<set<int>, int>>& path, int previous = -1) {
+	visited.insert(s);
+	//put the point in the newest path
+	if (previous != -1) {
+		path[path.size() - 1].first.insert(previous);
+		path[path.size() - 1].second += G[previous][s];
+	}
+
 	if (s == f) {
+		path[path.size() - 1].first.insert(s);
 		//reached destination, so start a new path
-		path.push_back(vector<int>());
-		return;
+		path.push_back(pair<set<int>, int>(set<int>(), 0));
+		return true;
 	}
 
 	visited.insert(s);
-	//put the point in the newest path
-	path[path.size() - 1].push_back(s);
-	cerr << "At point " << s << endl;
 	for (unsigned i = 0; i < G[s].size(); ++i) {
 		if (G[s][i] != -1 && visited.find(i) == visited.end()) {
-			dfs(G, i, f, visited, path);
+			dfs(G, i, f, visited, path, s);
 			visited.erase(i);
 		}
 	}
-	cerr << "\tbottom of dfs" << endl;
+	return false;
 }
 
 int main() {
@@ -59,13 +64,16 @@ int main() {
 
 		cout << "Case " << k << ": ";
 
-		vector<vector<int>> pathJ;
-		pathJ.push_back(vector<int>());
+		vector<pair<set<int>, int>> pathJ;
+		pathJ.push_back(pair<set<int>, int>(set<int>(), 0));
 		set<int> visited;
 		dfs(g, J - 1, W - 1, visited, pathJ);
+		cerr << "Paths from J (" << J << ") to W (" << W << "):" << endl;
 		for (unsigned i = 0; i < pathJ.size() - 1; ++i) {
-			for (unsigned j = 0; j < pathJ[i].size(); ++i) {
-				cerr << pathJ[i][j] << " ";
+			cerr << pathJ[i].second << ": ";
+			for (auto j = pathJ[i].first.begin(); j != pathJ[i].first.end();
+					++j) {
+				cerr << *j << " ";
 			}
 			cerr << endl;
 		}
