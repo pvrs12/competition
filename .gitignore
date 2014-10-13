@@ -1,6 +1,6 @@
-#*.d
-#*/Debug/*
-#*/Release/*
-#*.o
-#*.mk
-#*.class
+*.d
+*/Debug/*
+*/Release/*
+*.o
+*.mk
+*.class
