@@ -1,6 +1,10 @@
+#c++ object file
+*.o
 *.d
+#windows executable
+*.exe
+#eclipse Debug or Release folders
 */Debug/*
 */Release/*
-*.o
-*.mk
+#java class
 *.class
