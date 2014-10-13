@@ -1,7 +1,6 @@
-#include <climits>
-#include <iostream>
+#include <algorithm>
 #include <queue>
-#include <utility>
+#include <iostream>
 #include <vector>
 
 using namespace std;
@@ -15,38 +14,29 @@ struct compare {
 	}
 };
 
-pair<vector<int>, vector<int>> dijkstra(graph g, unsigned source) {
-	vector<int> dist(g.size());
-	dist[source] = 0;
-	vector<int> previous(g.size());
-
-	priority_queue<vertex_distance, vector<vertex_distance>, compare> q;
-
-	for (unsigned i = 0; i < g.size(); ++i) {
-		if (i != source) {
-			dist[i] = INT_MAX;
-			previous[i] = -1;
-		}
-		q.push(vertex_distance(i, dist[i]));
-	}
-
-	while (!q.empty()) {
-		vertex_distance u = q.top();
+vector<vector<int>> bfs(const graph& G, int J, int W){
+	//do a bfs from J to W on G
+	queue<int> q;
+	vector<int> v;
+	
+	v.push_back(J);
+	q.push(J);
+	while(!q.empty()){
+		int t = q.front();
 		q.pop();
-		for (unsigned j = 0; j < g[u.first].size(); j++) {
-			int v = g[u.first][j];
-			if (v != -1) {
-				if (dist[v] == INT_MAX) {
-					int alt = u.second + g[u.first][v];
-					if (alt < dist[v]) {
-						dist[v] = alt;
-						previous[v] = u.first;
-					}
+		if(t==W){
+			//the path should be in v... kind of
+		}
+		for(unsigned i=0;i<G[J].size();++i){
+			int u = G[J][i];
+			if(u!=-1){
+				if(!(find(v.begin(),v.end(),u) != v.end())){
+					v.push_back(u);
+					q.push(u);
 				}
 			}
 		}
 	}
-	return pair<vector<int>, vector<int>>(dist, previous);
 }
 
 int main() {
@@ -71,16 +61,6 @@ int main() {
 		}
 
 		cout << "Case " << k << ": ";
-		pair<vector<int>, vector<int>> jpath = dijkstra(g, J);
-		for (unsigned i = 0; i < jpath.first.size(); ++i) {
-			cout << "Distance for J to " << i << " is " << jpath.first[i]
-					<< endl;
-		}
-		pair<vector<int>, vector<int>> wpath = dijkstra(g, W);
-		for (unsigned i = 0; i < jpath.first.size(); ++i) {
-			cout << "Distance for W to " << i << " is " << jpath.first[i]
-					<< endl;
-		}
 
 	}
 
