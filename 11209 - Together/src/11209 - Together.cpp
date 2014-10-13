@@ -1,6 +1,7 @@
-#include <algorithm>
-#include <queue>
 #include <iostream>
+#include <map>
+#include <set>
+#include <utility>
 #include <vector>
 
 using namespace std;
@@ -9,34 +10,30 @@ typedef vector<vector<int>> graph;
 typedef pair<int, int> vertex_distance;
 
 struct compare {
-	bool operator()(const vertex_distance& a, const vertex_distance b) const {
+	bool operator()(const vertex_distance& a, const vertex_distance& b) const {
 		return a.second < b.second;
 	}
 };
 
-vector<vector<int>> bfs(const graph& G, int J, int W){
-	//do a bfs from J to W on G
-	queue<int> q;
-	vector<int> v;
-	
-	v.push_back(J);
-	q.push(J);
-	while(!q.empty()){
-		int t = q.front();
-		q.pop();
-		if(t==W){
-			//the path should be in v... kind of
-		}
-		for(unsigned i=0;i<G[J].size();++i){
-			int u = G[J][i];
-			if(u!=-1){
-				if(!(find(v.begin(),v.end(),u) != v.end())){
-					v.push_back(u);
-					q.push(u);
-				}
-			}
+void dfs(const graph& G, int s, int f, set<int>& visited,
+		vector<vector<int>>& path) {
+	if (s == f) {
+		//reached destination, so start a new path
+		path.push_back(vector<int>());
+		return;
+	}
+
+	visited.insert(s);
+	//put the point in the newest path
+	path[path.size() - 1].push_back(s);
+	cerr << "At point " << s << endl;
+	for (unsigned i = 0; i < G[s].size(); ++i) {
+		if (G[s][i] != -1 && visited.find(i) == visited.end()) {
+			dfs(G, i, f, visited, path);
+			visited.erase(i);
 		}
 	}
+	cerr << "\tbottom of dfs" << endl;
 }
 
 int main() {
@@ -62,6 +59,16 @@ int main() {
 
 		cout << "Case " << k << ": ";
 
+		vector<vector<int>> pathJ;
+		pathJ.push_back(vector<int>());
+		set<int> visited;
+		dfs(g, J - 1, W - 1, visited, pathJ);
+		for (unsigned i = 0; i < pathJ.size() - 1; ++i) {
+			for (unsigned j = 0; j < pathJ[i].size(); ++i) {
+				cerr << pathJ[i][j] << " ";
+			}
+			cerr << endl;
+		}
 	}
 
 	return 0;

@@ -14,12 +14,12 @@ CC := g++
 #OBJFILES := $(CDIR)/$(CFILES:.c=.o)
 #DEPFILES := $(CFILES:.c=.d)
 
-$(PROG) :
+$(PROG) : $(CDIR)/$(CFILES)
 	$(CC) $(CFLAGS) -o $(PROG) $(CDIR)/$(CFILES)
 #	$(LINK.o) $(LDFLAGS) -o $@ $^
 
 clean :
-	rm -f $(PROG).exe $(PROG).d
+	rm -f $(PROG).exe $(PROG).d $(PROG)
 #$(OBJFILES) $(DEPFILES)
 
 -include $(DEPFILES)
