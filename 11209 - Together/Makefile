@@ -15,11 +15,14 @@ CC := g++
 #DEPFILES := $(CFILES:.c=.d)
 
 $(PROG) : $(CDIR)/$(CFILES)
-	$(CC) $(CFLAGS) -o $(PROG) $(CDIR)/$(CFILES)
+	$(CC) $(CFLAGS) -o $(PROG) $(CDIR)/$(CFILES) $(LDFLAGS)
 #	$(LINK.o) $(LDFLAGS) -o $@ $^
 
 clean :
-	rm -f $(PROG).exe $(PROG).d $(PROG)
+	rm -f $(PROG).exe $(PROG).d $(PROG) $(PROG)-online $(PROG)-online.d
+
+online : $(PROG)
+	$(CC) $(CFLAGS) -DONLINE_JUDGE -o $(PROG)-online $(CDIR)/$(CFILES)
 #$(OBJFILES) $(DEPFILES)
 
 -include $(DEPFILES)

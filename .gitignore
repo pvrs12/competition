@@ -5,6 +5,7 @@
 *.exe
 #eclipse Debug or Release folders
 */Debug/*
+*/Debug Online Judge/*
 */Release/*
 #java class
 *.class
