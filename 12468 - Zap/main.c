@@ -4,7 +4,7 @@
 int main(){
 	while(1){
 		int start,finish;
-		scanf("%d%d");
+		scanf("%d%d",&start,&finish);
 		if(start==-1 && finish==-1){
 			break;
 		}
