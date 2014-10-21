@@ -2,7 +2,6 @@
 #include <cstring>
 #include <iostream>
 #include <string>
-#include <utility>
 #include <vector>
 
 using namespace std;
@@ -18,17 +17,17 @@ string* reverse(const string& s, int len) {
 }
 
 struct compare {
-	compare(const string& s) :
+	compare(string* s) :
 			s(s) {
 	}
-	string s;
+	string* s;
 
 	bool operator()(int a, int b) const {
-		return strcmp(s.c_str() + a, s.c_str() + b) < 0;
+		return strcmp(s->c_str() + a, s->c_str() + b) < 0;
 	}
 };
 
-int stringMatching(const string& s,const trie& sa,const string& sub) {
+int stringMatching(const string& s, const trie& sa, const string& sub) {
 	int lo = 0, hi = s.length() - 1, mid = lo;
 	while (lo < hi) {
 		mid = (lo + hi) / 2;
