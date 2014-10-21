@@ -68,19 +68,13 @@ int main() {
 		cin >> s;
 
 		//build a trie of s
-		//
 		trie SA;
 		for (unsigned i = 0; i < s.size(); ++i) {
 			SA.push_back(i);
 		}
 		sort(SA.begin(), SA.end(), compare(s));
-//		for (unsigned i = 0; i < s.size(); ++i) {
-//			cout << SA[i] << "\t" << s.c_str() + SA[i] << endl;
-//		}
-//
-//		cout << "That's our trie\n\n\n\n\n" << endl;
 
-		//O((n+n)^2)
+		//O(n^2 * log(n)
 		for (int j = s.size() - 1; j >= 0; --j) {
 			string* revsub = reverse(s, j);
 			//O(n*log(n))
