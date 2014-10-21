@@ -52,24 +52,19 @@ int main() {
 		cin >> s;
 
 		//build a trie of s
-		trie SA;
+		trie SAs;
+		trie SAr;
 		for (unsigned i = 0; i < s.size(); ++i) {
-			SA.push_back(i);
+			SAs.push_back(i);
+			SAr.push_back(i);
 		}
-		sort(SA.begin(), SA.end(), compare(s));
+		sort(SAs.begin(), SAs.end(), compare(s));
 
-		//O(n^2 * log(n)
-		for (int j = s.size() - 1; j >= 0; --j) {
-			string* revsub = reverse(s, j);
-			//O(n*log(n))
-			int res = stringMatching(s, SA, *revsub);
-			if (res != -1) {
-				cout << *revsub << endl;
-				delete revsub;
-				break;
-			}
-			delete revsub;
-		}
+		string* reverseS = reverse(s, s.length()-1);
+		sort(SAr.begin(), SAr.end(), compare(*reverseS));
+
+		//find intersections between SAr and SAs
+
 	}
 	return 0;
 }
