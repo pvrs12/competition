@@ -28,7 +28,7 @@ struct compare {
 	}
 };
 
-pair<int, int> stringMatching(string& s, trie& sa, string& sub) {
+int stringMatching(const string& s,const trie& sa,const string& sub) {
 	int lo = 0, hi = s.length() - 1, mid = lo;
 	while (lo < hi) {
 		mid = (lo + hi) / 2;
@@ -40,24 +40,9 @@ pair<int, int> stringMatching(string& s, trie& sa, string& sub) {
 		}
 	}
 	if (strncmp(s.c_str() + sa[lo], sub.c_str(), sub.length()) != 0) {
-		return pair<int, int>(-1, -1);
+		return -1;
 	}
-	pair<int, int> ans;
-	ans.first = lo;
-	lo = 0, hi = s.length() - 1, mid = lo;
-	while (lo < hi) {
-		mid = (lo + hi) / 2;
-		int res = strncmp(s.c_str() + sa[mid], sub.c_str(), sub.length());
-		if (res > 0) {
-			hi = mid;
-		} else {
-			lo = mid + 1;
-		}
-	}
-	if (strncmp(s.c_str() + sa[hi], sub.c_str(), sub.length()) != 0)
-		hi--;
-	ans.second = hi;
-	return ans;
+	return lo;
 }
 
 int main() {
@@ -78,8 +63,8 @@ int main() {
 		for (int j = s.size() - 1; j >= 0; --j) {
 			string* revsub = reverse(s, j);
 			//O(n*log(n))
-			pair<int, int> res = stringMatching(s, SA, *revsub);
-			if (res.first != -1) {
+			int res = stringMatching(s, SA, *revsub);
+			if (res != -1) {
 				cout << *revsub << endl;
 				delete revsub;
 				break;
