@@ -26,7 +26,8 @@ struct compare {
 	bool operator()(int a, int b) const {
 		if (ordering == 0)
 			//alphabetical
-			return strcmp(s->c_str() + a, s->c_str() + b) < 0;
+			return *(s->c_str() + a) < *(s->c_str() + b);
+		//strcmp(s->c_str() + a, s->c_str() + b) < 0;
 		else
 			//length (greatest to least)
 			return strlen(s->c_str() + a) > strlen(s->c_str() + b);
@@ -72,6 +73,10 @@ int main() {
 		string* reverseS = reverse(s, s->length() - 1);
 		//O(n log(n))
 		sort(SAr.begin(), SAr.end(), compare(reverseS, 1));
+//		for (int i = 0; i < SAs.size(); ++i) {
+//			cout << s->c_str() + SAs[i] << "\t" << reverseS->c_str() + SAr[i]
+//					<< endl;
+//		}
 
 		//O(n * n log n)
 //		for (unsigned i = 0; i < SAr.size(); ++i) {
