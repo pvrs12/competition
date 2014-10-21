@@ -57,26 +57,31 @@ int main() {
 		string* s = new string();
 		cin >> *s;
 
-		//build a suffix array of s
+		//build a suffix array of s and reversed s
+		//this step is O(n^2 log n)
 		trie SAs;
 		trie SAr;
+		//O(n)
 		for (unsigned i = 0; i < s->size(); ++i) {
 			SAs.push_back(i);
 			SAr.push_back(i);
 		}
+		//O(n log(n))
 		sort(SAs.begin(), SAs.end(), compare(s, 0));
 
 		string* reverseS = reverse(s, s->length() - 1);
+		//O(n log(n))
 		sort(SAr.begin(), SAr.end(), compare(reverseS, 1));
 
-		for (unsigned i = 0; i < SAr.size(); ++i) {
-			int a = stringMatching(*s, SAs, reverseS->c_str() + SAr[i],
-					reverseS->length() - SAr[i]);
-			if (a != -1) {
-				cout << reverseS->c_str() + SAr[i] << endl;
-				break;
-			}
-		}
+		//O(n * n log n)
+//		for (unsigned i = 0; i < SAr.size(); ++i) {
+//			int a = stringMatching(*s, SAs, reverseS->c_str() + SAr[i],
+//					reverseS->length() - SAr[i]);
+//			if (a != -1) {
+//				cout << reverseS->c_str() + SAr[i] << endl;
+//				break;
+//			}
+//		}
 
 		delete s;
 		delete reverseS;
