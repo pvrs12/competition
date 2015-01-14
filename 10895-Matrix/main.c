@@ -3,21 +3,28 @@
 #include <memory.h>
 
 int main() {
-	int m, n;
-	while (scanf("%d%d", &m, &n) != EOF) {
+	while (1) {
+		int m = -1;
+		int n = -1;
+		scanf("%d%d", &m, &n);
+		if (m == -1 || n == -1) {
+			break;
+		}
+
 		int** matrix = malloc(sizeof(int*) * m);
 		int i;
+		int j;
 		for (i = 0; i < m; ++i) {
 			matrix[i] = malloc(sizeof(int) * n);
-			memset(matrix[i], 0, n);
+			for (j = 0; j < n; ++j) {
+				matrix[i][j] = 0;
+			}
 		}
-		int j;
 		/*read matrix*/
 		for (j = 0; j < m; ++j) {
 			int r;
 			scanf("%d", &r);
 			int* rowPos = malloc(sizeof(int) * r);
-			memset(rowPos, -1, r);
 			for (i = 0; i < r; ++i) {
 				scanf("%d", &rowPos[i]);
 				rowPos[i]--;
@@ -29,35 +36,6 @@ int main() {
 			}
 			free(rowPos);
 		}
-		/*//XXX
-		 //security print
-		 printf("security print 1\n");
-		 for (i = 0; i < m; ++i) {
-		 for (j = 0; j < n; ++j) {
-		 printf("%d ", matrix[i][j]);
-		 }
-		 printf("\n");
-		 }
-		 printf("\n\n");
-		 //transpose
-		 //	for (i = 0; i < n; ++i) {
-		 //		for (j = 0; j < m; ++j) {
-		 //			int temp = matrix[i][j];
-		 //			matrix[i][j] = matrix[j][i];
-		 //			matrix[j][i] = temp;
-		 //		}
-		 //	}
-		 //from here out n&m have switched
-		 //XXX
-		 //security print
-		 printf("security print 2\n");
-		 for (i = 0; i < n; ++i) {
-		 for (j = 0; j < m; ++j) {
-		 printf("%d ", matrix[j][i]);
-		 }
-		 printf("\n");
-		 }
-		 printf("\n\n");*/
 
 		/*print their format*/
 		printf("%d %d\n", n, m);
@@ -77,13 +55,21 @@ int main() {
 					k++;
 				}
 			}
-			printf("%d ", nonzeroes);
-			for (k = 0; k < nonzeroes; ++k) {
-				printf("%d ", rowPos[k] + 1);
-			}
-			printf("\n");
-			for (k = 0; k < nonzeroes; ++k) {
-				printf("%d ", matrix[rowPos[k]][i]);
+			if (nonzeroes == 0) {
+				printf("0\n");
+			} else {
+				printf("%d ", nonzeroes);
+				for (k = 0; k < nonzeroes; ++k) {
+					printf("%d", rowPos[k] + 1);
+					if (k < nonzeroes - 1)
+						printf(" ");
+				}
+				printf("\n");
+				for (k = 0; k < nonzeroes; ++k) {
+					printf("%d", matrix[rowPos[k]][i]);
+					if (k < nonzeroes - 1)
+						printf(" ");
+				}
 			}
 			printf("\n");
 			free(rowPos);
