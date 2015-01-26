@@ -10,9 +10,12 @@ int main() {
 		if (!sz && !p) {
 			break;
 		}
-		//top right is square
+		//top right is square of grid size
+		//in from top right is ((rows from top right)/2)^2
 
+		//find square sz,p is in
+		for(int i=sz;i>=1;--i){
 
+		}
 	}
-
 }
