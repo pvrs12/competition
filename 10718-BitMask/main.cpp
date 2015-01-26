@@ -1,5 +1,6 @@
 #include <iostream>
 #include <bitset>
+#include <climits>
 
 using namespace std;
 
@@ -13,26 +14,30 @@ bool operator>(bitset<32> a, bitset<32> b) {
 
 int main() {
 	while (true) {
-		unsigned int Ni, Li, Ui;
-		Ni = Li = Ui = 0;
+		long long Ni, Li, Ui;
+		Ni = Li = Ui = -1;
 		cin >> Ni >> Li >> Ui;
-		if (!Ni && !Li && !Ui) {
+		if (Ni == -1 && Li == -1 && Ui == -1) {
 			break;
 		}
 
-		bitset<32> M(Ui), N(Ni), L(Li), U(Ui);
+		const bitset<32> N(Ni), L(Li), U(Ui);
+		bitset<32> M(Li);
 		//go through each bit
 		//left to right, turn on and check if L <= M (don't need to check U because M starts equal to U)
 		//for biggest N | M, turn on M if !N
-		for (int i = 31; i >= 0; --i) {
-			//if they're the same, flip M
+		for (int i = 0; i < 32; ++i) {
+			if (M > U) {
+				break;
+			}
 			if (M[i] == N[i]) {
+			//if they're the same, flip M
 				M[i].flip();
-				//if that makes it bigger than U, un-flip
 				if (M > U) {
+					//if that makes it bigger than U, un-flip
 					M[i].flip();
-				} // if it makes it less than L, un-flip
-				else if (M < L) {
+				} else if (M < L) {
+					// if it makes it less than L, un-flip
 					M[i].flip();
 				}
 			}
