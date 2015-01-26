@@ -23,15 +23,13 @@ int main() {
 
 		const bitset<32> N(Ni), L(Li), U(Ui);
 		bitset<32> M(Li);
+		cout<<N<<endl;
 		//go through each bit
 		//left to right, turn on and check if L <= M (don't need to check U because M starts equal to U)
 		//for biggest N | M, turn on M if !N
 		for (int i = 0; i < 32; ++i) {
-			if (M > U) {
-				break;
-			}
 			if (M[i] == N[i]) {
-			//if they're the same, flip M
+				//if they're the same, flip M
 				M[i].flip();
 				if (M > U) {
 					//if that makes it bigger than U, un-flip
