@@ -49,6 +49,31 @@ int main() {
 			}
 		}
 
+		for (int i = 32; i >= 0; --i) {
+			//compare M with L to fix M to be greater than L
+			if (!L[i] && M[i]) {
+				//L[i]==0
+				//M[i]==1
+				//too big must flip bit
+				M[i].flip();
+			} else if (L[i] && M[i]) {
+				//L[i]==1
+				//M[i]==1
+				//same size
+				//do nothing
+				//no need to check for a flip here because we minimized before
+			} else if (!L[i] && !M[i]) {
+				//L[i]==0
+				//M[i]==0
+				//same size
+				//do nothing
+			} else if (L[i] && !M[i]) {
+				//L[i]==1
+				//M[i]==0
+				//i am definitely smaller
+				break;
+			}
+		}
 		cout << M.to_ulong() << endl;
 	}
 }
