@@ -22,22 +22,30 @@ int main() {
 		}
 
 		const bitset<32> N(Ni), L(Li), U(Ui);
-		bitset<32> M(Li);
-		cout<<N<<endl;
-		//go through each bit
-		//left to right, turn on and check if L <= M (don't need to check U because M starts equal to U)
-		//for biggest N | M, turn on M if !N
-		for (int i = 0; i < 32; ++i) {
-			if (M[i] == N[i]) {
-				//if they're the same, flip M
+		bitset<32> M(~Ni);
+		//M[0] is right-most (LSB)
+
+		//go from MSB to LSB, if it is greater than U, need to flip
+		for (int i = 31; i >= 0; --i) {
+			if (M[i] == 1 && U[i] == 0) {
+				//greater than U, got to flip this bit
 				M[i].flip();
-				if (M > U) {
-					//if that makes it bigger than U, un-flip
-					M[i].flip();
-				} else if (M < L) {
-					// if it makes it less than L, un-flip
-					M[i].flip();
-				}
+			} else if (M[i] == 0 && U[i] == 1) {
+				//we are definitely less
+				//no flip because that would make us bigger
+				break;
+			}
+		}
+
+		//go from MSB to LSB, if it is less than L, need to flip
+		for (int i = 31; i >= 0; --i) {
+			if (M[i] == 0 && L[i] == 1) {
+				//less than L, got to flip this bit
+				M[i].flip();
+			} else if (M[i] == 1 && L[i] == 0) {
+				//we are definitely greater
+				//and the lowest possible becuase we are ~N
+				break;
 			}
 		}
 
