@@ -93,9 +93,10 @@ public class Main {
 					} else {
 						s = s.substring(0, j) + s.substring(j + 1);
 					}
+					//we deleted a character, need to go backwards by one
+					j--;
 				}
 			}
-			s = s.replace("\"", "");
 			werdz.set(i, s);
 		}
 		ArrayList<String> werdz2 = new ArrayList<String>();
