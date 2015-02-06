@@ -95,15 +95,13 @@ public class Main {
 					}
 				}
 			}
+			s = s.replace("\"", "");
 			werdz.set(i, s);
 		}
 		ArrayList<String> werdz2 = new ArrayList<String>();
 
 		// remove dupies
 		for (String s : werdz) {
-			if (s == "") {
-				continue;
-			}
 			if (werdz2.contains(s)) {
 				continue;
 			} else {
@@ -115,6 +113,9 @@ public class Main {
 		Collections.sort(werdz);
 
 		for (String s : werdz) {
+			if (s.equals("")) {
+				continue;
+			}
 			System.out.println(s);
 		}
 		in.close();
