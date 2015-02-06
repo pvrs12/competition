@@ -85,7 +85,7 @@ public class Main {
 			for (int j = 0; j < s.length(); ++j) {
 				char a = s.charAt(j);
 				if (!(isAlpha(a) || a == '-')) {
-					// remove dat is
+					// remove dat ish
 					if (j == 0) {
 						s = s.substring(j + 1);
 					} else if (j == s.length() - 1) {
