@@ -93,7 +93,7 @@ public class Main {
 					} else {
 						s = s.substring(0, j) + s.substring(j + 1);
 					}
-					//we deleted a character, need to go backwards by one
+					// we deleted a character, need to go backwards by one
 					j--;
 				}
 			}
