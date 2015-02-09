@@ -116,7 +116,7 @@ public class Main {
 			if (s.equals("")) {
 				continue;
 			}
-			System.out.println(s);
+			System.out.print(s);
 		}
 		in.close();
 	}
