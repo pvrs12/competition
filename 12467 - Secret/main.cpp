@@ -86,6 +86,7 @@ trie* constructSA(string* s) {
 }
 
 int main() {
+	//fuck this shit
 	int T;
 	cin >> T;
 	for (int i = 0; i < T; ++i) {
