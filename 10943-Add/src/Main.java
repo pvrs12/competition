@@ -1,24 +1,29 @@
+import java.math.BigInteger;
 import java.util.Scanner;
 
 public class Main {
 
-	public static long fact(long n) {
-		if (n <= 0) {
-			return 1;
+	public static BigInteger fact(BigInteger n) {
+		if (n.longValue() <= 0) {
+			return BigInteger.ONE;
 		}
-		return fact(n - 1) * n;
+		return n.multiply(fact(n.subtract(BigInteger.ONE)));
 	}
 
-	public static int comb(long n, long k) {
-		return (int) (fact(n) / (fact(k) * fact(n - k)) % 1000000);
+	public static BigInteger comb(int n, int k) {
+		BigInteger bi = fact(new BigInteger("" + n)).divide(
+				fact(new BigInteger(k + "")).multiply(
+						new BigInteger((n - k) + "")));
+
+		return bi;
 	}
 
-	public static int solve(int n, int k, int num) {
-		if (num == 1) {
-			return k;
-		}
-		return solve(n, k, num - 1) + comb(k, num);
-	}
+	// public static int solve(int n, int k, int num) {
+	// if (num == 1) {
+	// return k;
+	// }
+	// return solve(n, k, num - 1) + comb(k, num);
+	// }
 
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
@@ -28,7 +33,12 @@ public class Main {
 			if (N == 0 && K == 0) {
 				break;
 			}
-			System.out.println(solve(N, K, N));
+			BigInteger res = BigInteger.ZERO;
+			for (int i = 2; i <= K; ++i) {
+				res = res.add(comb(K + N - 1, N));
+			}
+			//res = res.mod(new BigInteger("1000000"));
+			System.out.println(res);
 		}
 		in.close();
 	}
